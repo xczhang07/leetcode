@@ -68,3 +68,49 @@ public:
 };
 
 same time complexity and space complexity with DFS solution.
+    
+    
+Union Find Soluction
+很好的一种解题思路，针对每一个元素，设成不同的下标，如果两个元素在同一个集合中，将一个的下标更改成另外一个。这样针对每个元素进行检测，
+最后就可以得出结果。
+
+
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& M) {
+        int n = M.size();
+        int ret = n;
+        vector<int> parent(n);
+        for(int i = 0; i < n; ++i)  parent[i] = i;
+        for(int i = 0; i < n; ++i)
+        {
+            for(int j = i+1; j < n; ++j)
+            {
+                if(M[i][j] == 1)
+                {
+                    int p1 = getParent(parent, i);
+                    int p2 = getParent(parent, j);
+                    if(p1 != p2)
+                    {
+                        --ret;
+                        parent[p2] = p1;
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+    
+    int getParent(vector<int>& parent, int idx)
+    {
+        while(parent[idx] != idx)
+        {
+            parent[idx] = parent[parent[idx]];
+            idx = parent[idx];
+        }
+        return idx;
+    }
+};
+
+具体思路详见：
+http://www.geeksforgeeks.org/union-find/
