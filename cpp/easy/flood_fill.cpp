@@ -29,7 +29,9 @@ public:
 
 
 Conclusion:
-This issue is not a complicated algorithm issue, using dfs for this issue is the best choice. According to the given starting pixel (sr,sc), if the color at (sr, sc) position is not equal to the newColor(input), then we need to navigate to the four directions of the position: (sr-1, sc), (sr+1, sc), (sr, sc-1), (sr, sc+1).
+This issue is not a complicated algorithm issue, using dfs for this issue is the best choice.
+According to the given starting pixel (sr,sc), if the color at (sr, sc) position is not equal to the newColor(input), 
+then we need to navigate to the four directions of the position: (sr-1, sc), (sr+1, sc), (sr, sc-1), (sr, sc+1).
 
 Time Complexity is: O(m*n)
 Space Complexity is: O(1) except for the recursive stack.
