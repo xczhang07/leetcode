@@ -43,3 +43,17 @@ another is for case2.
 
 Time Complexity: O(n)
 Space Complexity: O(1)
+
+/* upper_bound solution */
+class Solution {
+public:
+    char nextGreatestLetter(vector<char>& letters, char target) {
+        vector<char>::iterator upper = upper_bound(letters.begin(), letters.end(), target);
+        if(upper != letters.end())
+            return *upper;
+        else
+            return letters[0]; //because the input array has been sorted.
+    }
+};
+
+
