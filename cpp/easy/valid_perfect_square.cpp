@@ -21,5 +21,26 @@ public:
 };
 
 
+
 Conclusion:
 Easy, Binary search, time complexity is: O(logN)
+
+class Solution {
+public:
+    bool isPerfectSquare(int num) {
+        /* invalidation check */
+        if(num < 0)
+            return false;
+        else if(num == 1) /* corner case */
+            return true;
+        for(int i = 1; i <= num/2; ++i)
+        {
+            if(i*i == num)
+                return true;
+            else if(i*i > num)
+                return false;
+        }
+        return false;
+    }
+};
+
