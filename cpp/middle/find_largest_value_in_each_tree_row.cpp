@@ -45,3 +45,45 @@ Time Complexity:
 O(n)
 Space Complexity:
 O(n)
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> largestValues(TreeNode* root) {
+        int height = getHeight(root);
+        vector<int> ret(height, INT_MIN);
+        dfs(root, 0, ret);
+        return ret;
+    }
+    
+    void dfs(TreeNode* root, int level, vector<int>& ret)
+    {
+        if(!root)
+            return;
+        if(root->val > ret[level])
+            ret[level] = root->val;
+        dfs(root->left, level+1, ret);
+        dfs(root->right, level+1, ret);
+        return;
+    }
+    
+    int getHeight(TreeNode* root)
+    {
+        if(!root)
+            return 0;
+        int left = getHeight(root->left);
+        int right = getHeight(root->right);
+        int height = (left > right?left:right)+1;
+        return height;
+    }
+};
+
+dfs solution
