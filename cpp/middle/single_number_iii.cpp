@@ -35,3 +35,37 @@ we can use the notation: val & (~(val-1)) to caculate the first different bit po
    
 Time Complexity: O(n)
 Space Complexity: O(1)
+
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+        int xor_val = 0;
+        int num1 = 0;
+        int num2 = 0;
+        vector<int> ret;
+        // actually, this xor value is the two different num1 and num2's xor result
+        for(int num : nums)
+            xor_val ^= num;
+        // we are trying to find out the first different k bits number between num1 and num2
+        int k = 0;
+        for(k; k < 32; ++k)
+        {
+            if(xor_val >> k & 1)
+                break;
+        }
+        
+        for(int num : nums)
+        {
+            if(num >> k & 1)
+                num1 ^= num;
+            else
+                num2 ^= num;
+        }
+        ret.push_back(num1);
+        ret.push_back(num2);
+        return ret;
+    }
+};
+
+Time Complexity: O(n)
+Space Complexity: O(1)
