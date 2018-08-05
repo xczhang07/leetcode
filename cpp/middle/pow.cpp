@@ -48,5 +48,5 @@ double myPow(double x, int n) {
 
 Conclusion: a middle level leetcode algorithm, not hard, we can use both recursive and iteration to resolve this issue.
 
-Time Complexity: O(n)
+Time Complexity: O(logn)
 Space Complexity: O(1)
