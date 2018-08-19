@@ -47,8 +47,9 @@ public:
         return ret;
     }
 };
-
+/*
 Conclusion: middle level graph issue, read the issue carefully, then understand what is the meaning of "min height tree".
+构成的树深度最大的情况发生在所有点位于一条链上，此时深度为 n/2 或 n/2+1 ，这取决于n的奇偶性。
 the root of the min height tree is the middle one or two nodes of the longest path of the input graph.
 step1, create graph according to the given edges.
 step2, add the degree 1's node into queue(unordered_set() will keep the unique neighbor)
@@ -57,3 +58,5 @@ step4, push the node in queue into ret array
 
 Time Complexity: O(v+E)
 Space Complexity: O(n)
+
+*/
