@@ -35,3 +35,34 @@ public:
 /*
 we can use min priority queue to resolve this issue.
 */
+
+
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+class Solution {
+public:
+    int minMeetingRooms(vector<Interval>& intervals) {
+        if(intervals.size() < 2)
+            return intervals.size();
+        map<int,int> m; /* map is sorted which unlike unordered_map */
+        for(auto i : intervals)
+        {
+            m[i.start]++;
+            m[i.end]--;
+        }
+        int max_room = 0;
+        int ret = 0;
+        for(auto e : m)
+        {
+            ret = max(ret, max_room+=e.second);
+        }
+        return ret;
+    }
+};
