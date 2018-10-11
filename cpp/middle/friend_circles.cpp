@@ -114,3 +114,53 @@ public:
 
 具体思路详见：
 http://www.geeksforgeeks.org/union-find/
+
+
+
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& M) {
+        if(M.size() == 0 || M[0].size() == 0)
+            return 0;
+        unordered_map<int, vector<int>> graph; /* initialize a graph with the input matrix */
+        int circle = 0;
+        for(int i = 0; i < M.size(); ++i)
+        {
+            for(int j = 0; j < M[0].size(); ++j)
+            {
+                if(i == j)
+                    continue;
+                else
+                {
+                    if(M[i][j] == 1)
+                        graph[i].push_back(j);
+                }
+            }
+        }
+        vector<bool> visited(M.size(), false);
+        for(int i = 0; i < M.size(); ++i)
+        {
+            if(!visited[i])
+            {
+                circle++;
+                dfs(graph, visited, i);
+            }
+        }
+        return circle;
+    }
+    
+    
+    void dfs(unordered_map<int, vector<int>>& graph, vector<bool>& visited, int idx)
+    {
+        if(visited[idx])
+            return;
+        visited[idx] = true;
+        for(int i = 0; i < graph[idx].size(); ++i)
+        {
+            if(!visited[graph[idx][i]])
+                dfs(graph, visited, graph[idx][i]);
+        }
+    }
+    
+   
+};
