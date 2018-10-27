@@ -49,3 +49,49 @@ Space Complexity: O(V)
 
 */
 
+class Solution {
+public:
+    int findSet(vector<int>& parent, int idx)
+    {
+        while(idx != parent[idx])
+        {
+            parent[idx] = parent[parent[idx]];
+            idx = parent[idx];
+        }
+        return idx;
+    }
+    
+    void unionSet(vector<int>& parent, int idx1, int idx2)
+    {
+        int p1 = findSet(parent, idx1);
+        int p2 = findSet(parent, idx2);
+        if(p1 != p2)
+            parent[p2] = p1;
+        return;
+    }
+    
+    bool validTree(int n, vector<pair<int, int>>& edges) {
+        /* Detect Cycle in Undirected Graph */
+       if(n <= 1)
+           return true;
+        int ne = edges.size();
+        if(ne != n-1)
+            return false;
+        int circle = n;
+        vector<int> parent(n,0);
+        for(int i = 0; i < n; ++i)
+            parent[i] = i;
+        for(auto e: edges)
+        {
+            int p1 = findSet(parent, e.first);
+            int p2 = findSet(parent, e.second);
+            if(p1 != p2)
+            {
+                unionSet(parent, e.first, e.second);
+                --circle;
+            }
+        }
+        return circle == 1;
+    }
+};
+
