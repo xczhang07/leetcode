@@ -77,3 +77,47 @@ public:
 Time Complexity is: O(n)
 Space Complexity is: O(n) recursive stack
 */
+
+
+Solution 2
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> boundaryOfBinaryTree(TreeNode* root) {
+        vector<int> ret;
+        if(!root)
+            return ret;
+        ret.push_back(root->val);
+        getBoundaries(root->left, ret, true, false);
+        getBoundaries(root->right, ret, false, true);
+        return ret;
+    }
+    
+    void getBoundaries(TreeNode* root, vector<int>& ret, bool left, bool right)
+    {
+        if(!root)
+            return;
+        if(root->left==NULL && root->right == NULL)
+        {
+            ret.push_back(root->val);
+            return;
+        }
+        if(left)
+            ret.push_back(root->val);
+        getBoundaries(root->left, ret, left&&root->left, right&&!root->right);
+        getBoundaries(root->right, ret, left&&!root->left, right&&root->right);
+        if(right)
+            ret.push_back(root->val);
+        return;
+    }
+    
+};
