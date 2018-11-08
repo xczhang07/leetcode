@@ -45,3 +45,58 @@ private:
  * BSTIterator i = BSTIterator(root);
  * while (i.hasNext()) cout << i.next();
  */
+
+
+Solution2 using stack to resolve the issue
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class BSTIterator {
+public:
+    BSTIterator(TreeNode *root) {
+        while(root)
+        {
+            st.push(root);
+            root = root->left;
+        }
+    }
+    
+   
+
+    /** @return whether we have a next smallest number */
+    bool hasNext() {
+       return !st.empty();
+    }
+
+    /** @return the next smallest number */
+    int next() {
+        TreeNode* node = st.top();
+        st.pop();
+        int ret = node->val;
+        if(node->right)
+        {
+            node = node->right;
+            while(node)
+            {
+                st.push(node);
+                node = node->left;
+            }
+        }
+        return ret;
+    }
+    
+private:
+    stack<TreeNode*> st;
+};
+
+/**
+ * Your BSTIterator will be called like this:
+ * BSTIterator i = BSTIterator(root);
+ * while (i.hasNext()) cout << i.next();
+ */
