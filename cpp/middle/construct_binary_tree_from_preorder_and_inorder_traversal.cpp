@@ -51,3 +51,46 @@ of this value in the inorder travesal array, then the left part of this element 
 right sub tree. Then we do it recursively, and we will get this tree finally.
 Time Complexity: O(n)
 Space Complexity: O(1)
+    
+    
+Solution 2: easy to understand 
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& pre, vector<int>& in) {
+       int root = 0;
+        return helper(pre, root, in, 0, in.size()-1);
+    }
+    
+    TreeNode* helper(vector<int>& pre, int& rt, vector<int>& in, int in_st, int in_end)
+    {
+        if(rt == pre.size() || in_st > in_end)
+            return NULL;
+        
+        TreeNode* root = new TreeNode(pre[rt]);
+        int idx = getIndex(in, pre[rt]); /* get the root index in inorder */
+        rt++;
+        root->left = helper(pre, rt, in, in_st, idx-1);
+        root->right = helper(pre, rt, in, idx+1, in_end);
+        return root;
+    }
+   
+    
+    int getIndex(vector<int>& inorder, int val)
+    {
+        for(int i = 0; i < inorder.size(); ++i)
+        {
+            if(inorder[i] == val)
+                return i;
+        }
+        return -1;
+    }
+};
