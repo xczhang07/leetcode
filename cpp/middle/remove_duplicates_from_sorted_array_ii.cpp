@@ -28,3 +28,36 @@ Conclusion:
 
 Time Complexity: O(n)
 Space Complexity: O(1)
+
+    
+ Solution 2:
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        if(nums.size() <= 1)
+            return nums.size();
+        int len = 0;
+        int t = 0;
+        int num = nums[0];
+        int times = 1;
+        for(t = 1; t < nums.size(); ++t)
+        {
+            if(nums[t] == num)
+            {
+                if(times < 2)
+                {
+                    len++;
+                    nums[len] = nums[t];
+                }
+                times++;   
+            }
+            else
+            {
+                nums[++len] = nums[t];
+                times = 1;
+                num = nums[t];
+            }
+        }
+        return len+1;
+    }
+};
