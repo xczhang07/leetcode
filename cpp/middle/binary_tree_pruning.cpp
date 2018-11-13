@@ -26,4 +26,36 @@ an middle level algorithm issue; however, IMO, it does not account to a middle d
 we can use postorder to travel this tree.
 
 Time Complexity: O(n)
-Space Complexity: O(1), if it does not contain the call stack of the recurisive.
+Space Complexity: O(1), if it does not contain the call stack of the recurisive.\
+
+Solution 2:
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* pruneTree(TreeNode* root) {
+        if(!root)
+            return root;
+        dfs(root);
+        return root;
+    }
+    
+    void dfs(TreeNode*& root)
+    {
+        if(!root)
+            return;
+        dfs(root->left);
+        dfs(root->right);
+        if(root->left == NULL && root->right == NULL && root->val == 0)
+            root = NULL;
+        return;
+    }
+};
