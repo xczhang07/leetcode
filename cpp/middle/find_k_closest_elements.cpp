@@ -22,3 +22,24 @@ http://www.cnblogs.com/grandyang/p/7519466.html
 Time Complexity is: O(n)
 Space Complexity is: O(1)
 */
+
+
+Solution 2:
+easy to understand 
+
+class Solution {
+public:
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        int low = 0;
+        int high = arr.size()-1;
+        while(high-low >= k)
+        {
+            if(abs(arr[low]-x) > abs(arr[high]-x))
+                ++low;
+            else
+                --high;
+        }
+        return vector<int>(arr.begin()+low, arr.begin()+low+k);
+    }
+    
+};
