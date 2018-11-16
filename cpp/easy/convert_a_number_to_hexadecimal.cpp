@@ -29,3 +29,22 @@ an easy algorithm issue, but we need to know the rule to convert base10 integer 
 5. finally, reverse the result string and return it.
 
  
+Solution 2: more efficiency and short
+
+class Solution {
+public:
+    string toHex(int num) {
+        if(num == 0)
+            return "0";
+        string hex_temp = "0123456789abcdef";
+        int count = 0;
+        string res;
+        while(num != 0 && count < 8)
+        {
+            res = hex_temp[num&0xf] + res;
+            num >>= 4;
+            count++;
+        }
+        return res;
+    }
+};
