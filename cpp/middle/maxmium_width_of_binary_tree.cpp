@@ -32,3 +32,47 @@ public:
     }
     
 };
+
+
+Solution 2: bfs
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int widthOfBinaryTree(TreeNode* root) {
+        if(!root) return 0;
+        queue<pair<TreeNode*,int>> q;
+        q.push(make_pair(root, 1));
+        int ret = 1;
+        while(!q.empty())
+        {
+            int n = q.size();
+            int left = q.front().second;
+            int right = left;
+            for(int i = 0; i < n; ++i)
+            {
+                right = q.front().second;
+                TreeNode* top = q.front().first;
+                 
+                q.pop();
+                if(top->left)
+                    q.push(make_pair(top->left, 2*right));
+                if(top->right)
+                    q.push(make_pair(top->right, 2*right+1));
+            }
+            ret = max(ret, right-left+1);
+        }
+        return ret;
+    }
+    
+   
+    
+};
