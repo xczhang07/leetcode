@@ -21,3 +21,36 @@ eg, if we insert 1,2,3,4 into a set, the set.begin() is 1 etc...
 
 Time Complexity: O(n)
 Space Complexity: O(n)
+
+Solution2:
+time complexity is: O(n)
+space complexity is: O(1)
+    
+    class Solution {
+public:
+    int thirdMax(vector<int>& nums) {
+        long first = LONG_MIN;
+        long second = LONG_MIN;
+        long third = LONG_MIN;
+        for(auto num : nums)
+        {
+            if(num > first)
+            {
+                third = second;
+                second = first;
+                first = num;
+            }
+            else if(num < first && num > second)
+            {
+                third = second;
+                second = num;
+            }
+            else if(num < second && num > third)
+                third = num;
+        }
+        if(third == LONG_MIN)
+            return first;
+        else
+            return third;
+    }
+};
