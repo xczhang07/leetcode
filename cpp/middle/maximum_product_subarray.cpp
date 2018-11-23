@@ -23,3 +23,28 @@ public:
         return ret;
     }
 };
+
+Solution2: constant space complexity
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        /*
+        in this issue, we can maintain two arrays, one stores the max value of subarray product at index i, 
+        another array stores the min value of subarray product at index i.
+        then after each run, we cacualte the max value.
+        time complexity is: O(n)
+        space complexity is: O(n)
+        */
+        int ret = nums[0];
+        int currMax = nums[0];
+        int currMin = nums[0];
+        for(int i = 1; i < nums.size(); ++i)
+        {
+            int temp = currMax;
+            currMax = max(currMax*nums[i], max(currMin*nums[i], nums[i]));
+            currMin = min(currMin*nums[i], min(temp*nums[i], nums[i]));
+            ret = max(ret, currMax);
+        }
+        return ret;
+    }
+};
