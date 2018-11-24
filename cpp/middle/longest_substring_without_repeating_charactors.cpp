@@ -24,3 +24,45 @@ a middle level algorithm issue, which is not very easy. We have to update the in
 Time Complexity: O(n)
 Space Complexity: O(n)
 */
+
+Solution 2: using sliding window + hash_set to resolve the issue
+abcabcbb
+
+1. first round the sliding window is: abc, maxLen is 3.
+2. then we find out a already exist in the hash set, we shift the sliding window, now sliding become: bca
+3. when we meet some charactor already exist in the hash set, we shift the window: cab
+4, sliding window is: abc
+5, sliding window is: cb
+6, sliding window is: b
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        /* maintain a sliding window */
+        if(s.size() <= 1)
+            return s.size();
+        int maxLen = 0;
+        int l = 0;
+        int r = 0;
+        unordered_set<char> visited;
+        while(r < s.size())
+        {
+            if(!visited.count(s[r]))
+            {
+                maxLen = max(maxLen, r-l+1);
+                visited.insert(s[r]);
+            }
+            else
+            {
+                while(l != r && s[l] != s[r])
+                {
+                    visited.erase(s[l]);
+                    ++l;
+                }
+                ++l;
+            }
+            ++r;
+        }
+        return maxLen;
+    }
+};
