@@ -80,4 +80,9 @@ public:
 
 相似的题目还有:
 https://leetcode.com/problems/minimum-window-substring/description/
+https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/description/
+https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/description/
+https://leetcode.com/problems/minimum-size-subarray-sum/description/
+https://leetcode.com/problems/minimum-window-substring/description/
 
