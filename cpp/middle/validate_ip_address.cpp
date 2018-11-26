@@ -81,3 +81,51 @@ public:
 Conclusion:
 a middle level algorithm issue, check a input string whether or not is an valid ipv4 or ipv6 string
 */
+
+
+Solution 2:
+an easy solution, one function work out this issue.
+   class Solution {
+public:
+
+    string validIPAddress(string IP) {
+        istringstream ss(IP);
+        string t = "";
+        int cnt = 0;
+        if(IP.find(":") == string::npos) /* input ip address is ipv4 */
+        {
+            while(getline(ss, t, '.'))
+            {
+                ++cnt;
+                if(cnt > 4)
+                    return "Neither";
+                if(t.size() == 0 || t.size() > 3 || (t[0] == '0' && t.size() > 1))
+                    return "Neither";
+                for(int i = 0; i < t.size(); ++i)
+                {
+                    if(t[i] < '0' || t[i] > '9')
+                        return "Neither";
+                }
+                int num = stoi(t);
+                if(num < 0 || num > 255)
+                    return "Neither";
+            }
+            return (cnt == 4 && IP.back()!='.') ? "IPv4":"Neither";
+        }
+        else /* input ip address is ipv6 */
+        {
+            while(getline(ss, t, ':'))
+            {
+                ++cnt;
+                if(cnt > 8)
+                    return "Neither";
+                if(t.size() == 0 || t.size() > 4)
+                    return "Neither";
+                for (char c : t) {
+                    if (!(c >= '0' && c <= '9') && !(c >= 'a' && c <= 'f') && !(c >= 'A' && c <= 'F')) return "Neither";
+                }
+            }
+            return (cnt == 8 && IP.back() != ':') ? "IPv6" : "Neither";
+        }
+    }
+};
