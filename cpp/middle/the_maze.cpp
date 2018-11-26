@@ -48,3 +48,47 @@ public:
 Time Complexity is: O(m*n)
 Space Complexity is: O(m*n)
 */
+
+
+Solution 2: BFS version
+
+class Solution {
+public:
+    bool hasPath(vector<vector<int>>& maze, vector<int>& start, vector<int>& destination) {
+        if(maze.size() == 0 || maze[0].size() == 0)
+            return false;
+        int m = maze.size();
+        int n = maze[0].size();
+        vector<vector<bool>> visited(m, vector<bool>(n, false));
+        vector<pair<int,int>> dirs = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+        queue<pair<int,int>> q;
+        q.push({start[0], start[1]});
+        visited[start[0]][start[1]] = true;
+        while(!q.empty())
+        {
+            auto t = q.front();
+            q.pop();
+            if(t.first == destination[0] && t.second == destination[1])
+                return true;
+            for(auto dir : dirs)
+            {
+                int x = t.first;
+                int y = t.second;
+                while(x >= 0 && x < m && y >= 0 && y < n && maze[x][y] == 0)
+                {
+                    x += dir.first;
+                    y += dir.second;
+                }
+                x -= dir.first;
+                y -= dir.second;
+                if(!visited[x][y])
+                {
+                    q.push({x, y});
+                    visited[x][y] = true;
+                }
+            }
+        }
+        return false;
+    }
+
+};
