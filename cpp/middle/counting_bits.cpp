@@ -31,5 +31,23 @@ I think this algorithm issue is an easy level issue. implement a helper function
 key point: using x & 1 == 1, we can check whether or not x is 1 at the rightest position because 1's binary version is: 00000001
 
 
-Time complexity: O(n)
+Time complexity: O(n*sizeof(num))
 Space complexity: O(1)
+
+class Solution {
+public:
+    vector<int> countBits(int num) {
+        if(num == 0)
+            return {0};
+        vector<int> dp(num+1, 0);
+        dp[0] = 0;
+        for(int i = 1; i <= num; ++i)
+        {
+            dp[i] = dp[i/2] + (i%2);
+        }
+        return dp;
+    }
+};
+
+Time Complexity is: O(n)
+space complexity is: O(1)
