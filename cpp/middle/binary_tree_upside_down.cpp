@@ -27,3 +27,39 @@ public:
 Time Complexity is: O(n)
 Space Complexity is: O(1) if we do not count the call stack space.
 */
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+Solution 2
+
+class Solution {
+public:
+    TreeNode* upsideDownBinaryTree(TreeNode* root) {
+        if(!root)
+            return root;
+        return dfs(root, NULL, NULL);
+    }
+    
+    TreeNode* dfs(TreeNode* node, TreeNode* parent, TreeNode* right)
+    {
+        if(node->left == NULL)
+        {
+            node->left = right;
+            node->right = parent;
+            return node;
+        }
+        
+        TreeNode* newNode = dfs(node->left, node, node->right);
+        node->left = right;
+        node->right = parent;
+        return newNode;
+    }
+};
