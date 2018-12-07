@@ -41,3 +41,45 @@ public:
         }
     }
 };
+
+
+BFS Solution:
+class Solution {
+public:
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K) {
+        unordered_map<int, vector<pair<int,int>>> g;
+        buildGraph(flights, g);
+        int min_money = INT_MAX;
+        int stop = 0;
+        queue<pair<int,int>> q;
+        q.push(make_pair(src, 0));
+        while(!q.empty())
+        {
+            int n = q.size();
+            for(int i = 0; i < n; ++i)
+            {
+                auto t = q.front();
+                q.pop();
+                if(t.first == dst)
+                    min_money = min(min_money, t.second);
+                for(auto m : g[t.first])
+                {
+                    if(t.second + m.second < min_money)
+                        q.push(make_pair(m.first, m.second+t.second));
+                }
+            }
+            if(stop > K)
+                break;
+            ++stop;
+        }
+        return min_money == INT_MAX? -1: min_money;
+    }
+    
+    void buildGraph(vector<vector<int>>& flights, unordered_map<int,vector<pair<int,int>>>& g)
+    {
+        for(int i = 0; i < flights.size(); ++i)
+            g[flights[i][0]].push_back(make_pair(flights[i][1], flights[i][2]));
+    }
+    
+   
+};
