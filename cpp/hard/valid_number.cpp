@@ -36,3 +36,38 @@ public:
          return true;
     }
 };
+
+
+the solution version without e as following:
+bool isNumber(string s) {
+    /* preprocessing */
+    if(s.size() == 0)
+        return false;
+    int start = 0;
+    int end = s.size()-1;
+    while(s[start] == ' ')
+        ++start;
+    while(s[end] == ' ')
+        --end;
+    if(s[start] == '+' || s[start] == '-')
+        ++start;
+    if(start > end)
+        return false;
+    bool is_dot = false;
+    for(int i = start; i <= end; ++i)
+    {
+        if(s[i] >= '0' && s[i] <= '9')
+            continue;
+        else if(s[i] == '.')
+        {
+            if(start == end)
+                return false;
+            if(is_dot)
+                return false;
+            is_dot = true;
+        }
+        else
+            return false;
+    }
+    return true;
+}
