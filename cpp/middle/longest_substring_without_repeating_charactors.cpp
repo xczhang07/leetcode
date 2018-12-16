@@ -66,3 +66,28 @@ public:
         return maxLen;
     }
 };
+
+
+Solustion 3:
+more efficient consistent memory
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+         if(s.size() < 2)
+             return s.size();
+        int start = 0;
+        int max_len = 0;
+        vector<int> dict(256, 0);
+        for(int i = 0; i < s.size(); ++i)
+        {
+            while(dict[s[i]] == 1)
+            {
+                dict[s[start]] = 0;
+                ++start;
+            }
+            dict[s[i]] = 1;
+            max_len = max(max_len, i-start+1);
+        }
+        return max_len;
+    }
+};
