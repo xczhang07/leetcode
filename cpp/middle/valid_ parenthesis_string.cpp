@@ -29,3 +29,10 @@ public:
         return true;
     }
 };
+
+/*
+x is the number of '(', and y is the number of ')', m is the number of '*'
+it should meets the following requirements:
+x + m >= y
+y + m >= x
+*/
