@@ -34,3 +34,38 @@ a = k*m + c, b = k*n + c. ==> a-b = (m-n)*k.
 Time Complexity is: O(n)
 Space Complexity is: O(n)
 */
+
+Solution 2: unordered_map version solution
+
+class Solution {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+        int n = nums.size();
+        if(n < 2) return false;
+        if(k == 0)
+        {
+            for(int i = 0; i < nums.size()-1; ++i)
+            {
+                if(nums[i] == 0 && nums[i+1] == 0)
+                    return true;
+            }
+            return false;
+        }
+        unordered_map<int, int> m;
+        m[0] = 0;
+        int sum = 0;
+        for(int i = 0; i < nums.size(); ++i)
+        {
+            sum += nums[i];
+            int rest = sum%k;
+            if(m.find(rest) == m.end())
+                m[rest] = i;
+            else
+            {
+                if(i-m[rest]+1 >= 2)
+                    return true;
+            }
+        }
+        return false;
+    }
+};
