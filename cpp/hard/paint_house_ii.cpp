@@ -46,3 +46,34 @@ Space Complexity is: O(m*n)
 reference link as following:
 http://www.cnblogs.com/grandyang/p/5322870.html
 */
+
+Solution ii
+class Solution {
+public:
+    int minCostII(vector<vector<int>>& costs) {
+        if(costs.size() == 0)
+            return 0;
+        int n = costs.size();
+        int k = costs[0].size();
+        vector<vector<int>> dp(n, vector<int>(k, 0));
+        for(int i = 0; i < k; ++i)
+            dp[0][i] = costs[0][i];
+        for(int i = 1; i < n; ++i)
+        {
+            for(int j = 0; j < k; ++j)
+            {
+                int prev_min = INT_MAX;
+                for(int m = 0; m < k; ++m)
+                {
+                    if(m != j)
+                        prev_min = min(prev_min, dp[i-1][m]);
+                }
+                dp[i][j] = costs[i][j] + prev_min;
+            }
+        }
+        int ret = INT_MAX;
+        for(int i = 0; i < k; ++i)
+            ret = min(ret, dp[n-1][i]);
+        return ret;
+    }
+};
