@@ -58,3 +58,69 @@ public:
 Conclustion: an easy algorithm issue, dfs can resolve the issue, read the description carefully, know how to use api call.
 Time Complexity: O(n) n is the integer number
 Space Complexity: O(k) k is the level of the list.
+
+    
+Solution II BFS version
+
+/**
+ * // This is the interface that allows for creating nested lists.
+ * // You should not implement it, or speculate about its implementation
+ * class NestedInteger {
+ *   public:
+ *     // Constructor initializes an empty nested list.
+ *     NestedInteger();
+ *
+ *     // Constructor initializes a single integer.
+ *     NestedInteger(int value);
+ *
+ *     // Return true if this NestedInteger holds a single integer, rather than a nested list.
+ *     bool isInteger() const;
+ *
+ *     // Return the single integer that this NestedInteger holds, if it holds a single integer
+ *     // The result is undefined if this NestedInteger holds a nested list
+ *     int getInteger() const;
+ *
+ *     // Set this NestedInteger to hold a single integer.
+ *     void setInteger(int value);
+ *
+ *     // Set this NestedInteger to hold a nested list and adds a nested integer to it.
+ *     void add(const NestedInteger &ni);
+ *
+ *     // Return the nested list that this NestedInteger holds, if it holds a nested list
+ *     // The result is undefined if this NestedInteger holds a single integer
+ *     const vector<NestedInteger> &getList() const;
+ * };
+ */
+class Solution {
+public:
+    int depthSum(vector<NestedInteger>& nestedList) {
+        /* invalidation check */
+        if(nestedList.size() == 0)
+            return 0;
+        /* bfs travel */
+        queue<NestedInteger> q;
+        for(auto n : nestedList)
+            q.push(n);
+        int sum = 0;
+        int depth = 0;
+        while(!q.empty())
+        {
+            int n = q.size();
+            ++depth;
+            for(int i = 0; i < n; ++i)
+            {
+                NestedInteger e = q.front();
+                q.pop();
+                if(e.isInteger())
+                    sum += e.getInteger()*depth;
+                else
+                {
+                    for(auto m : e.getList())
+                        q.push(m);
+                }
+            }
+        }
+        return sum;
+    }
+    
+};
