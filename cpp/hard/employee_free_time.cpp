@@ -42,3 +42,55 @@ public:
     }
 };
 
+
+/*
+Solution2, similiar question with meeting room ii.
+*/
+
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+
+bool compare(Interval& i1, Interval& i2)
+{
+    return i1.start < i2.start;
+}
+
+class Solution {
+public:
+    vector<Interval> employeeFreeTime(vector<vector<Interval>>& schedule) {
+        vector<Interval> ret;
+        if(schedule.size() == 0)
+            return ret;
+        map<int, int> m;
+        for(int i = 0; i < schedule.size(); ++i)
+        {
+            for(int j = 0; j < schedule[i].size(); ++j)
+            {
+                m[schedule[i][j].start]++;
+                m[schedule[i][j].end]--;
+            }
+        }
+        
+        int cnt = 0;
+        for(auto e : m)
+        {
+            cnt += e.second;
+            if(cnt == 0)
+                ret.push_back(Interval(e.first, 0));
+            if(cnt != 0 && ret.size() != 0 && ret.back().end == 0)
+                ret.back().end = e.first;
+        }
+        if(ret.size() != 0)
+            ret.pop_back();
+        return ret;
+    }
+};
+
+
