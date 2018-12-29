@@ -95,3 +95,42 @@ public:
     }
 };
 
+/* BFS version */
+
+class Solution {
+public:
+    bool validTree(int n, vector<pair<int, int>>& edges) {
+        vector<unordered_set<int>> g(n, unordered_set<int>());
+        for(auto e : edges)
+        {
+            g[e.first].insert(e.second);
+            g[e.second].insert(e.first);
+        }
+        
+        vector<bool> visited(n, false);
+        queue<int> q;
+        q.push(0);
+        while(!q.empty())
+        {
+            int node = q.front();
+            q.pop();
+            if(visited[node])
+                return false;
+            visited[node] = true;
+            for(auto child : g[node])
+            {
+                q.push(child);
+                g[child].erase(node);
+            }
+        }
+        
+        /* check fully connected */
+        for(int i = 0; i < visited.size(); ++i)
+            if(!visited[i]) return false;
+        
+        return true;
+    }
+    
+    
+};
+
