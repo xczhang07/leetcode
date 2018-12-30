@@ -38,3 +38,51 @@ then you will get what to do.
 Time Complexity: O(n)
 Space Complexity: O(n)
 */
+
+
+
+struct Log
+{
+    int id;
+    int timestamp;
+    string status;
+    Log(int id, int timestamp, string status)
+    {
+        this->id = id;
+        this->timestamp = timestamp;
+        this->status = status;
+    }
+};
+
+class Solution {
+public:
+    vector<int> exclusiveTime(int n, vector<string>& logs) {
+        vector<int> times(n,0);
+        if(n == 0)
+            return times;
+        
+        stack<Log> st;
+        for(string log: logs)
+        {
+            stringstream ss(log);
+            string id;
+            string status;
+            string timestamp;
+            getline(ss, id, ':');
+            getline(ss, status, ':');
+            getline(ss, timestamp, ':');
+            Log mylog(stoi(id), stoi(timestamp), status);
+            if(status == "start")
+                st.push(mylog);
+            else
+            {
+                int addtime = stoi(timestamp)-st.top().timestamp+1;
+                times[st.top().id] += addtime;
+                st.pop();
+                if(!st.empty())
+                    times[st.top().id] -= addtime;
+            }
+        }
+        return times;
+    }
+};
