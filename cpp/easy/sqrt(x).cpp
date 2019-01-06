@@ -26,3 +26,39 @@ when the program exit the while loop, it should be start > end, in this case, st
 
 Time Complexity: O(logn)
 Space Complexity: O(1)
+
+    
+Add with precision version as following:
+https://www.geeksforgeeks.org/find-square-root-number-upto-given-precision-using-binary-search/
+
+double squareRoot(double number, double precision)
+{
+    double start = 0, end = number;
+    double mid;
+    double ans = 0;
+    
+    while (start <= end) {
+        mid = (start + end) / 2;
+        if (mid * mid == number) {
+            ans = mid;
+            break;
+        }
+        if (mid * mid < number) {
+            start = mid + 1;
+        }
+        else {
+            end = mid - 1;
+        }
+    }
+    cout<<"ans is: "<<ans<<endl;
+    double increment = 0.1;
+    while(precision != 1)
+    {
+        while(ans * ans <= number)
+            ans += increment;
+        ans -= increment;
+        increment /= 10;
+        precision *= 10;
+    }
+    return ans;
+}
