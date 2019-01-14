@@ -46,3 +46,63 @@ public:
  Time Complexity:
  Hit: O(1)
  getHit: O(s)=> s is the interval given by the code challenge.
+
+     
+     
+ class HitCounter {
+public:
+   /** Initialize your data structure here. */
+    HitCounter() {
+        this->hits.resize(300);
+        this->lastPosition = 0;
+        this->lastTime = 0;
+        this->counter = 0;
+    }
+
+    /** 
+    Record a hit.
+    @param timestamp - The current timestamp (in seconds granularity). 
+    */
+    void hit(int timestamp) {
+        update(timestamp);
+        this->hits[this->lastPosition]++;
+        this->counter++;
+    }
+
+    /** 
+        Return the number of hits in the past 5 minutes.
+        @param timestamp - The current timestamp (in seconds granularity). 
+    */
+    int getHits(int timestamp) {
+        update(timestamp);
+        return this->counter;
+    }
+    
+    void update(int timestamp)
+    {
+        int gap = min(timestamp-this->lastTime, 300);
+        for(int i = 0; i < gap; ++i)
+        {
+            this->lastPosition = (this->lastPosition+1) % 300;
+            this->counter -= this->hits[this->lastPosition];
+            this->hits[this->lastPosition] = 0;
+        }
+        this->lastTime = timestamp;
+        return;
+    }
+
+    
+
+private:
+    vector<int> hits;
+    int lastPosition;
+    int lastTime;
+    int counter;
+};
+
+/**
+ * Your HitCounter object will be instantiated and called as such:
+ * HitCounter obj = new HitCounter();
+ * obj.hit(timestamp);
+ * int param_2 = obj.getHits(timestamp);
+ */
