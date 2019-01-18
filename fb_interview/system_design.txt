@@ -1,1 +1,5 @@
-1. typeahead
+1. design typeahead
+2. design hash table (memcache, key value store)
+3. 设计这样一个service：
+好友之间互相分享一些链接，这些链接有不同的权限，比如公开，仅好友可见，分组好友可见 。
+要求判断，某个用户是否有权限查看某个链接。
