@@ -31,5 +31,5 @@ public:
 };
 
 
-Time Complexity is: O(n^2)
+Time Complexity is: O(n)
 Space Complexity is: O(1)
