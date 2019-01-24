@@ -51,3 +51,47 @@ in the input graph)
 Time Complexity: O(V*E)
 Space Complexity: O(V)
 */
+
+
+/*
+Solution#2 topological sort version
+Time Complexity is: O(n)
+space Complexity is: O(n)
+*/
+class Solution {
+public:
+   bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
+       int n = numCourses;
+       unordered_map<int, vector<int>> g;
+       vector<int> indegree(n,0);
+       queue<int> q;
+       int cnt = 0;
+       for(auto e : prerequisites)
+       {
+           g[e.first].push_back(e.second);
+           indegree[e.second]++;
+       }
+       for(int i = 0; i < indegree.size(); ++i)
+       {
+           if(indegree[i] == 0)
+               q.push(i);
+       }
+       if(q.size() == 0)
+           return false;
+       while(!q.empty())
+       {
+           int idx = q.front();
+           q.pop();
+           cnt++;
+           for(int i = 0; i < g[idx].size(); ++i)
+           {
+               --indegree[g[idx][i]];
+               if(indegree[g[idx][i]] == 0)
+                   q.push(g[idx][i]);
+           }
+       }
+       cout<<cnt<<endl;
+       return cnt == n;
+    }
+    
+};
