@@ -87,3 +87,62 @@ public:
     }
     
 };
+
+
+Solution #3  Union-Find
+
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        if(grid.size() == 0 || grid[0].size() == 0)
+            return 0;
+        int m = grid.size(), n = grid[0].size();
+        vector<pair<int,int>> dirs = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+        vector<int> parent(m*n, 0);
+        int count = 0;
+        for(int i = 0; i < m; ++i)
+        {
+            for(int j = 0; j < n; ++j)
+            {
+                if(grid[i][j] == '1')
+                {
+                    count++;
+                    parent[i*n+j] = i*n+j;
+                }
+            }
+        }
+        for(int i = 0; i < m; ++i)
+        {
+            for(int j = 0; j < n; ++j)
+            {
+                if(grid[i][j] == '1')
+                {
+                    for(auto dir : dirs)
+                    {
+                        int x = i + dir.first;
+                        int y = j + dir.second;
+                        if(x < 0 || x >= m || y < 0 || y >= n || grid[x][y] == '0')
+                            continue;
+                        int p1 = find(parent, i*n+j);
+                        int p2 = find(parent, x*n+y);
+                        if(p1 != p2)
+                        {
+                            parent[p2] = p1;
+                            --count;
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+    }
+    
+    
+    int find(vector<int>& parent, int idx)
+    {
+        while(parent[idx] != idx)
+            idx = parent[idx];
+        return idx;
+    }
+   
+};
