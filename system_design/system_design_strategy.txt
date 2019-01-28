@@ -1,0 +1,24 @@
+Step 1: Ask questions, outline use cases, constraints, and assumptions:
+  Questions may be asked:
+    1. who is going to use the system?
+    2. how do they use the system?
+    3. how many users for this system?
+    4. what does the system do?
+    5. what is the input and output of this system?
+    6. how much data we are going to expected to handle?
+    7. what is the QPS for this system ?(we may need to caculate it by ourselves according to the assumptions)
+    8. is read/write heavy system? what is the read/write ratio for this system ?
+    
+Step 2: Create a high-level design:
+    1. scratch the main-components and connections.
+    2. justify your ideas.
+    
+Step 3: Detailed design for each component:
+    1. SQL VS NoSQL
+    2. Database schema
+    4. API Design.
+    
+Step 4: Scale the design:
+    1. Load balancer.
+    2. database sharding (horizontal sharding(consistent hashing), vertical sharding)
+    
