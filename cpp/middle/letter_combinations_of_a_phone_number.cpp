@@ -1,3 +1,8 @@
+/*
+Time Complexity is: O(3^n) ===> every charactor has 3 options, total, the input contains n charactors.
+Space Complexity is: O(n) ===> recursive call open the stack is n.
+*/
+
 class Solution {
 public:
     vector<string> letterCombinations(string digits) {
