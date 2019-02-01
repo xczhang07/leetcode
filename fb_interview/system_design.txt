@@ -7,3 +7,10 @@
 5. design counter
 6. design fb post search
 7. api limiter
+8. design google map
+        - calculate route from A to B
+                - how to store map/road data？
+                - how to calculate shortest route？
+                - how to include road type info (highway / local street)？
+                - how to include traffic info ( what specific traffic info do you want? Where to get them? How to incorporate these info into route calculation? )
+        - how to scale the system
