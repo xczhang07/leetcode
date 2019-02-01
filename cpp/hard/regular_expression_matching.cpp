@@ -40,8 +40,8 @@ d[i][j] represents whether or not p[0,i] matches s[0,j]
 if p[i-1] == s[j-1] => dp[i][j] = dp[i-1][j-1]
 if p[i-1] == "." => dp[i][j] = dp[i-1][j-1]
 if p[i-1] == "*" :
-	if p[i-2] == s[j-1] && p[i-2] == "." => dp[i][j] = dp[i-2][j]
-        if p[i-2] != s[j-1] => dp[i][j] = dp[i-1][j] || dp[i-2][j] || dp[i][j-1] 
+	if p[i-2] != s[j-1] && p[i-2] != "." => dp[i][j] = dp[i-2][j]
+        if p[i-2] == s[j-1] => dp[i][j] = dp[i-1][j] || dp[i-2][j] || dp[i][j-1] 
 
 	case example:
 		dp[i][j] = dp[i-1][j] => s = "abc", p = "abc*"
