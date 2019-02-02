@@ -101,3 +101,56 @@ TreeNode* str2tree(string s) {
 }
 
 };
+
+
+/* stack solution */
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* str2tree(string s) {
+        if(s.empty())
+            return NULL;
+        stack<TreeNode*> st;
+        int num = 0;
+        int sign = 1;
+        for(int i = 0; i < s.size(); ++i)
+        {
+            if(s[i] == '-')
+                sign = -1;
+            else if(isdigit(s[i]))
+            {
+                num = 0;
+                while(i < s.size() && isdigit(s[i]))
+                {
+                    num = num * 10 + (s[i]-'0');
+                    ++i;
+                }
+                --i;
+                TreeNode* node = new TreeNode(num*sign);
+                sign = 1;
+                if(!st.empty())
+                {
+                    if(st.top()->left == NULL)
+                        st.top()->left = node;
+                    else
+                        st.top()->right = node;
+                }
+                st.push(node);
+            }
+            else if(s[i] == ')')
+                st.pop();
+        }
+        return st.top();
+    }
+    
+    
+};
