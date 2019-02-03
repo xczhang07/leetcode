@@ -16,4 +16,4 @@
         - how to scale the system
 9. Design storage system, for user to store files (like Google Drive)., each user has 100GB quote
 Follow up: if there are many files, how to handle? Cluster
-
+10. Design web crawler.
