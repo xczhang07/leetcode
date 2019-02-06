@@ -93,3 +93,7 @@ private:
  * obj.addWord(word);
  * bool param_2 = obj.search(word);
  */
+
+Time Complexity is: O(26^l)
+    
+Space Complexity is: O(26^l)
