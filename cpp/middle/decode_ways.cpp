@@ -32,3 +32,45 @@ public:
 Time Complexity is: O(n)
 Space Complexity is: O(n)
 */
+
+
+/*
+Space Complexity is O(1) version
+
+3 cases:
+
+case1:
+1->9 decode method is 1.
+10, 20: decode method is 1.
+11->19, 21->26: decode method is 2
+
+https://leetcode.com/problems/decode-ways/discuss/202814/Java-O(1)-Space-O(n)-Time
+*/
+
+class Solution {
+public:
+    int numDecodings(string s) {
+        if(s.size() == 0)
+            return 0;
+        int prev = 1;
+        int curr = 0;
+        int pprev = 0;
+        for(int i = 0; i < s.size(); ++i)
+        {
+            if(i > 0 && (s[i-1] == '1' || (s[i-1] == '2' && (s[i]-'0' <= 6))))
+            {
+                if(s[i] == '0')
+                    curr = pprev;
+                else
+                    curr = prev + pprev;
+            }
+            else if(s[i] == '0')
+                return 0;
+            else if(s[i] >= '1' && s[i] <= '9')
+                curr = prev;
+            pprev = prev;
+            prev = curr;
+        }
+        return curr;
+    }
+};
