@@ -18,3 +18,5 @@
 Follow up: if there are many files, how to handle? Cluster
 10. Design web crawler.
 11. Download manager design.
+12. map poi geohash:
+        http://massivetechinterview.blogspot.com/2015/06/poi-geohash.html
