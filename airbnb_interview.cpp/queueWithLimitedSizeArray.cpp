@@ -107,6 +107,10 @@ private:
 
 int main()
 {
+    
+    LimitedSizeQueue myQueue = LimitedSizeQueue(3);
+    for(int i = 1; i < 10; ++i)
+        myQueue.push(i);
     cout<<"myQueue's size is: "<<myQueue.getSize()<<endl;
     
     while(!myQueue.empty())
