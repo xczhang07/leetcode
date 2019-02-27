@@ -140,3 +140,28 @@ public:
         return heights;
     }
 };
+
+void printWater(vector<int>& array, vector<int>& water)
+{
+    if(array.size() == 0)
+        return;
+    int max_height = 0;
+    for(int i = 0; i < array.size(); ++i)
+        max_height = max(max_height, water[i]);
+    
+    int n = array.size();
+    for(int h = max_height; h > 0; --h)
+    {
+        for(int i = 0; i < n; ++i)
+        {
+            if(h <= array[i])
+                cout<<"+";
+            else if(h > array[i] && h <= water[i])
+                cout<<"w";
+            else
+                cout<<" ";
+        }
+        cout<<endl;
+    }
+    cout<<endl;
+}
