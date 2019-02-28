@@ -49,6 +49,69 @@ string LCAOfWords(vector<vector<string>>& words, string word1, string word2)
     return NULL;
 }
 
+
+class Node
+{
+public:
+    Node(string s)
+    {
+        this->word = s;
+    }
+    string word;
+    vector<Node*> _children;
+};
+
+Node* helper(unordered_map<string, vector<string>>& graph, string root)
+{
+    Node* newRoot = new Node(root);
+    if(!graph.count(root))
+        return newRoot;
+    for(int i = 0; i < graph[root].size(); ++i)
+        newRoot->_children.push_back(helper(graph, graph[root][i]));
+    return newRoot;
+}
+
+Node* buildTree(vector<vector<string>>& words)
+{
+    if(words.size() == 0)
+        return NULL;
+    unordered_map<string, vector<string>> graph;
+    for(int i = 0; i < words.size(); ++i)
+    {
+        for(int j = 1; j < words[i].size(); ++j)
+            graph[words[i][0]].push_back(words[i][j]);
+    }
+    
+    string root = words[0][0];
+    Node* wordTree =  helper(graph, root);
+    return wordTree;
+}
+
+void printWordTree(Node* root)
+{
+    if(!root)
+        return;
+    queue<Node*> q;
+    q.push(root);
+    while(!q.empty())
+    {
+        int n = q.size();
+        for(int i = 0; i < n; ++i)
+        {
+            Node* t = q.front();
+            q.pop();
+            cout<<t->word<<" ";
+            for(int j = 0; j < t->_children.size(); ++j)
+            {
+                if(t->_children[j] != NULL)
+                    q.push(t->_children[j]);
+            }
+        }
+        cout<<endl;
+    }
+    cout<<endl;
+}
+
 int main()
 {
   vector<vector<string>> words = {
