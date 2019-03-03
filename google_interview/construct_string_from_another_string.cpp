@@ -1,4 +1,6 @@
-第一轮：给两个字母串 str1 = “ABABZ”, str2 = "ABZ", 判断str1能否用str2中的字符拼成，如果能，最少的步数是多少？例子，从str2中取“A”，“B”，“A”，“B”，“Z”一共五步，但如果取“AB”，“ABZ”只需要两步。follow up，如果str2中有duplicate，BFS shortest path问题
+第一轮：给两个字母串 str1 = “ABABZ”, str2 = "ABZ", 判断str1能否用str2中的字符拼成，
+如果能，最少的步数是多少？例子，从str2中取“A”，“B”，“A”，“B”，“Z”一共五步，但如果取“AB”，“ABZ”只需要两步。
+follow up，如果str2中有duplicate，BFS shortest path问题
 
 第一个题的解释，换一种说法，就是从str2里每次可以取出一个substring，需要取多少次才能拼成str1.在没有duplicate的情况下，直接比较下一个字符串是否相同。
 
