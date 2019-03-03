@@ -2,3 +2,4 @@ guess the word  2
 bulls and cows  2 (bulls and cows + guess the word one round)
 auto complete   1
 candy           1
+generate maze   1
