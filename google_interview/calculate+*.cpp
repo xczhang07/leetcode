@@ -62,3 +62,58 @@ int calculate(string s)
     int ret = stoi(st.top());
     return ret;
 }
+
+dfs version:
+
+int dfsHelper(string& s, int& idx)
+{
+    if(idx >= s.size())
+        return 0;
+    int num = 0;
+    int tmp = 0;
+    char op;
+    for(idx; idx < s.size() && s[idx] != ')'; ++idx)
+    {
+        if(s[idx] == '+' || s[idx] == '*')
+        {
+            op = s[idx];
+            if(op == '+')
+                num = 0;
+            else
+                num = 1;
+        }
+        else if(isdigit(s[idx]))
+        {
+            if(op == '+')
+                num += (s[idx]-'0');
+            else
+            {
+                if(num == 0)
+                    num = (s[idx]-'0');
+                else
+                    num *= (s[idx]-'0');
+            }
+        }
+        else if(s[idx] == '(')
+        {
+            idx++;
+            tmp = dfsHelper(s, idx);
+            if(op == '+')
+                num += tmp;
+            else if(op == '*')
+                num *= tmp;
+            else
+                num = tmp;
+        }
+        else if(s[idx] == ' ')
+            continue;
+    }
+    return num;
+}
+
+int calculateDFS(string s)
+{
+    int idx = 0;
+    return dfsHelper(s, idx);
+}
+
