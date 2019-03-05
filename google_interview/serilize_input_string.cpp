@@ -46,3 +46,51 @@ vector<string> convert(string s)
 	vector<string> ret = convertHelper(s, idx);
 	return ret;
 }
+
+Version #2
+
+vector<string> convertHelper(string& s, int& idx)
+{
+    if(idx >= s.size())
+        return {};
+    vector<string> ret;
+    string tmp;
+    while(idx < s.size() && s[idx] != '}')
+    {
+        if(isalpha(s[idx]))
+        {
+            while(idx < s.size() && isalpha(s[idx]))
+            {
+                tmp += s[idx];
+                ++idx;
+            }
+            if(s[idx] == ',' || s[idx] == '}')
+            {
+                ret.push_back(tmp);
+                tmp.clear();
+            }
+        }
+        if(s[idx] == '}')
+            return ret;
+        if(s[idx] == '{')
+        {
+            ++idx;
+            vector<string> l = convertHelper(s, idx);
+            for(int i = 0; i < l.size(); ++i)
+                ret.push_back(tmp+l[i]);
+            tmp.clear();
+        }
+        ++idx;
+    }
+    return ret;
+}
+
+vector<string> convert(string s)
+{
+    if (s.size() == 0)
+        return{};
+    int idx = 0;
+    vector<string> ret = convertHelper(s, idx);
+    return ret;
+}
+
