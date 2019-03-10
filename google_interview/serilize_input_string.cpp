@@ -94,3 +94,63 @@ vector<string> convert(string s)
     return ret;
 }
 
+
+#version 3, handle parell parenthesis case: eg a{b,c,d}{m,n,t}
+
+vector<string> convertHelper(string& s, int& idx)
+{
+	if (idx >= s.size())
+		return{};
+	vector<string> ret;
+	string tmp;
+	while (idx < s.size() && s[idx] != '}')
+	{
+		if (isalpha(s[idx]) || isdigit(s[idx]))
+		{
+			while (idx < s.size() && (isalpha(s[idx])||isdigit(s[idx])))
+			{
+				tmp += s[idx];
+				++idx;
+			}
+			if (s[idx] == ',' || s[idx] == '}')
+			{
+				ret.push_back(tmp);
+				tmp.clear();
+			}
+		}
+		if (s[idx] == '}')
+			return ret;
+		if (s[idx] == '{')
+		{
+			++idx;
+			vector<string> l = convertHelper(s, idx);
+			if (ret.size() == 0) {
+				for (int i = 0; i < l.size(); ++i)
+					ret.push_back(tmp + l[i]);
+				tmp.clear();
+			}
+			else
+			{
+				vector<string> t = ret;
+				ret.clear();
+				for (int i = 0; i < t.size(); ++i)
+				{
+					for (int j = 0; j < l.size(); ++j)
+						ret.push_back(t[i] + l[j]);
+				}
+			}
+		}
+		++idx;
+	}
+	return ret;
+}
+
+vector<string> convert(string s)
+{
+	if (s.size() == 0)
+		return{};
+	int idx = 0;
+	vector<string> ret = convertHelper(s, idx);
+	return ret;
+}
+
