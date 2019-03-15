@@ -51,6 +51,30 @@ vector<TreeNode*> tree2forest(TreeNode* root, vector<TreeNode*> removelist)
 	return ret;
 }
 
+void printTree(TreeNode* root)
+{
+	if (!root)
+		return;
+	queue<TreeNode*> q;
+	q.push(root);
+	while (!q.empty())
+	{
+		int n = q.size();
+		for (int i = 0; i < n; ++i)
+		{
+			auto t = q.front();
+			q.pop();
+			cout << t->val << " ";
+			if (t->left)
+				q.push(t->left);
+			if (t->right)
+				q.push(t->right);
+		}
+		cout << endl;
+	}
+	return;
+}
+
 int main()
 {
   TreeNode* root = new TreeNode(0);
