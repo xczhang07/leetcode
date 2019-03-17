@@ -1,7 +1,9 @@
- 扫地机器人。给了3个扫地机器人的方法，可以直接调用，1. isObstacle(Direction d) return true if the next grid in direction d is an obstacle. 
- 2. move(Direction d) move one grid towards direction d. 3. clean(). 然后给了一个enum类，
- enum Direction { UP; RIGHT; DOWN; LEFT} 大概类似这样。问题是： 实现一个方法，cleanRoom()， 
- 调用这个方法一次就可以让扫地机器人扫完整个房间。房间有多大是不知道的。面经高频，DFS就完事儿了。
+ 扫地机器人。给了3个扫地机器人的方法，可以直接调用，
+ 1. isObstacle(Direction d) return true if the next grid in direction d is an obstacle. 
+ 2. move(Direction d) move one grid towards direction d. 
+ 3. clean(). 然后给了一个enum类，
+ enum Direction { UP; RIGHT; DOWN; LEFT} 大概类似这样。
+ 问题是： 实现一个方法，cleanRoom()， 调用这个方法一次就可以让扫地机器人扫完整个房间。房间有多大是不知道的。面经高频，DFS就完事儿了。
 
 /**
  * // This is the robot's control interface.
