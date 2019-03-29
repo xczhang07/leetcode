@@ -4,7 +4,8 @@ A move consists of choosing 0 and a 4-directionally adjacent number and swapping
 
 The state of the board is solved if and only if the board is [[1,2,3],[4,5,0]].
 
-Given a puzzle board, return the least number of moves required so that the state of the board is solved. If it is impossible for the state of the board to be solved, return -1.
+Given a puzzle board, return the least number of moves required so that the state of the board is solved. 
+If it is impossible for the state of the board to be solved, return -1.
 
 Examples:
 
