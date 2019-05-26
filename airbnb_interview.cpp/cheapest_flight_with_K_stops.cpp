@@ -83,3 +83,68 @@ public:
     
     
 };
+
+
+
+calculate the path of flights
+
+
+void buildGraph(vector<vector<int>>& flights, unordered_map<int, vector<pair<int, int>>>& graph)
+{
+    if(flights.size() == 0)
+        return;
+    
+    for(int i = 0; i < flights.size(); ++i)
+        graph[flights[i][0]].push_back(make_pair(flights[i][1], flights[i][2]));
+    
+    return;
+}
+
+int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int K, vector<int>& minPath) {
+    if(flights.size() == 0)
+        return 0;
+    unordered_map<int,vector<pair<int,int>>> graph;
+    buildGraph(flights, graph);
+    int minCost = INT_MAX;
+    int step = 0;
+    queue<pair<int,pair<int, vector<int>>>> q;
+    vector<int> path;
+    path.push_back(src);
+    q.push(make_pair(src, make_pair(0,path)));
+    while(!q.empty())
+    {
+        int n = q.size();
+        for(int i = 0; i < n; ++i)
+        {
+            auto t = q.front();
+            q.pop();
+            if(t.first == dst)
+            {
+                if(t.second.first < minCost)
+                {
+                    minCost = t.second.first;
+                    minPath = t.second.second;
+                }
+            }
+            
+            for(int j = 0; j < graph[t.first].size(); ++j)
+            {
+                int curr_cost = t.second.first;
+                int next_ticket = graph[t.first][j].second;
+                auto curr_path = t.second.second;
+                if(curr_cost + next_ticket < minCost)
+                {
+                    curr_path.push_back(graph[t.first][j].first);
+                    q.push(make_pair(graph[t.first][j].first, make_pair(curr_cost+next_ticket, curr_path)));
+                }
+            }
+        }
+        if(step > K)
+            break;
+        ++step;
+    }
+    if(minCost == INT_MAX)
+        return -1;
+    else
+        return minCost;
+}
