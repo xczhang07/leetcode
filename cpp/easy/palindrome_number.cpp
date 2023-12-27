@@ -3,16 +3,13 @@ public:
     bool isPalindrome(int x) {
         if(x < 0)
             return false;
-        int ret = 0;
+        long ret = 0;
         reverse_number(x, ret);
-        if(x == ret)
-            return true;
-        else
-            return false;
+        return x == ret;
     }
     
     
-    void reverse_number(int x, int& ret)
+    void reverse_number(int x, long& ret)
     {
         if(!x)
             return;
