@@ -19,5 +19,5 @@ public:
 Conclusion:
 we can use priority queue to resolve this issue.
 
-Time Complexity: O(n)
+Time Complexity: O(n+klogn), every time, the pop operation of priority_queue is logn, and we need to perform this operation k times.
 Space Complexity: O(n)
