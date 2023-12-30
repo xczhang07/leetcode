@@ -24,6 +24,8 @@ Space Complexity: O(n)
 
 Solution 2:
 Using quickselect to resolve this issue, the avg runtime is O(n) , the worst case is O(n^2); the avg runtime is better than the using heap solution.
+Reference: https://www.interviewbit.com/blog/kth-largest-element-of-array/
+
 class Solution {
 public:
     int partition(vector<int>& nums, int k, int start, int end){
