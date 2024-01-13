@@ -33,7 +33,7 @@ public:
             return false;
         else if(num == 1) /* corner case */
             return true;
-        for(int i = 1; i <= num/2; ++i)
+        for(long i = 1; i <= num/2; ++i)
         {
             if(i*i == num)
                 return true;
