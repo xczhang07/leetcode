@@ -17,6 +17,17 @@ Output:
   []
 ]
 
+Time Complexity Explanation:
+
+The vector size is n, and the recursion tree of the subsets as following:
+                             [1]
+                            /  | \
+                        [1,2] [2] [3]
+                          /    |   
+                    [1,2,3]   [2,3]
+The total subsets number is 2^n-1, and the copy time of each subsets to final ret vector is n,
+so the time complexity is: O(n*(2^n-1))
+reference as: https://www.reddit.com/r/leetcode/comments/158ksvi/true_time_complexity_of_lc_78_subsets/
 
 class Solution {
 public:
@@ -42,7 +53,7 @@ public:
         for(int i = idx; i < nums.size(); ++i)
         {
             tmp.push_back(nums[i]);
-            ret.push_back(tmp);
+            ret.push_back(tmp);  <------ copy time is linear N
             backTracking(ret, nums, tmp, i+1);
             tmp.pop_back();
         }
