@@ -30,5 +30,5 @@ public:
 
 Conclusion:
 
-Middle level algorithm issue, the time complexity is the same with subsets, which is: O(n*2^n), space complexity is: O(2^n)
+Middle level algorithm issue, the time complexity is the same with subsets, which is: O(n*2^n), space complexity is: O(n*2^n)
 
