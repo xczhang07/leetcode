@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> findIntersectionValues(vector<int>& nums1, vector<int>& nums2) {
+        if(nums1.size() == 0 || nums2.size() == 0) {
+            return {0,0};
+        }
+        set<int> s1(nums1.begin(), nums1.end());
+        set<int> s2(nums2.begin(), nums2.end());
+        int o1 = 0, o2 = 0;
+        for(int num : nums1) {
+            if(s2.find(num) != s2.end()) {
+                o1++;
+            }
+        }
+        for(int num : nums2) {
+            if(s1.find(num) != s1.end()) {
+                o2++;
+            }
+        }
+        return {o1, o2};
+    }
+};
+
+Time Complexity: O(m+n)
+Space Complexity: O(m+n)
