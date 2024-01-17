@@ -40,3 +40,36 @@ private:
  
  Conclusion:
  an easy ood+algorithm issue, no any other comments
+
+
+class MovingAverage {
+public:
+    MovingAverage(int size) {
+        this->_size = size;
+        sum = 0;
+    }
+    
+    double next(int val) {
+        if(process_q.size() < this->_size) {
+            sum += val;
+            process_q.push(val);
+            return (double)sum/(double)process_q.size();
+        } else {
+            sum -= process_q.front();
+            sum += val;
+            process_q.pop();
+            process_q.push(val);
+            return (double)sum/(double)process_q.size();
+        }
+    }
+
+    int _size;
+    int sum;
+    queue<int> process_q;
+};
+
+/**
+ * Your MovingAverage object will be instantiated and called as such:
+ * MovingAverage* obj = new MovingAverage(size);
+ * double param_1 = obj->next(val);
+ */
