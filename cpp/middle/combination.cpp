@@ -28,6 +28,6 @@ public:
 
 /*
 Conclusion: a middle level algorithm issue, we can use backtracking and dfs to resolve it
-Time Complexity: O(2^n*k)
-Space Complexity: O(n)
+Time Complexity: O(C(n,k)*k)
+Space Complexity: O(C(n,k))
 */
