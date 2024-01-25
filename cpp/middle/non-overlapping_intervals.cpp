@@ -39,3 +39,30 @@ public:
         return ret;
     }
 };
+
+
+// Using greed algorithm to sort the end of the intervals.
+// More details please refer to https://github.com/changgyhub/leetcode_101/blob/master/LeetCode%20101%20-%20A%20LeetCode%20Grinding%20Guide%20(C%2B%2B%20Version).pdf
+
+class Solution {
+public:
+
+   
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        if(intervals.size() <= 1)
+            return 0;
+        sort(intervals.begin(), intervals.end(), [](vector<int>& v1, vector<int>& v2) {
+            return v1[1] < v2[1];
+        });
+        int prev = intervals[0][1];
+        int removed = 0;
+        for(int i = 1; i < intervals.size(); ++i) {
+            if(prev > intervals[i][0]) {
+                ++removed;
+            } else {
+                prev = intervals[i][1];
+            }
+        }
+        return removed;  
+    }
+};
