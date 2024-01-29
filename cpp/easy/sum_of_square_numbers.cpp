@@ -3,13 +3,14 @@ public:
     bool judgeSquareSum(int c) {
         if(c < 0)
             return false;
-        int start = 0;
-        int end = sqrt(c);
+        long long int start = 0;
+        long long int end = sqrt(c);
         while(start <= end)
         {
-            if(start*start + end*end == c)
+            long long int sum = start*start + end*end;
+            if(sum == c)
                 return true;
-            else if(start*start + end*end > c)
+            else if(sum > c)
                 --end;
             else
                 ++start;
