@@ -46,3 +46,36 @@ Conclustion: a middle level algorithm issue on leetcode, not diffcult, my approa
 
 Time Complexity: O(n)
 Space Complexity: O(n)
+
+Update the code based on the interface changed
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        if(intervals.size() == 0 || intervals.size() == 1) {
+            return intervals;
+        }
+        sort(intervals.begin(), intervals.end(), [](vector<int>& v1, vector<int>& v2) {
+            if(v1[0] < v2[0]) {
+                return true;
+            } else if(v1[0] == v2[0]) {
+                return v1[1] < v2[1];
+            } else {
+                return false;
+            }
+        });
+        vector<vector<int>> merged_intervals;
+        int start = intervals[0][0];
+        int end = intervals[0][1];
+        for(int i = 1; i < intervals.size(); ++i) {
+            if(end < intervals[i][0]) {
+                merged_intervals.push_back({start, end});
+                start = intervals[i][0];
+                end = intervals[i][1];
+            } else {
+                end = max(end, intervals[i][1]);
+            }
+        }
+        merged_intervals.push_back({start, end});
+        return merged_intervals;
+    }
+};
