@@ -100,9 +100,44 @@ private:
     int counter;
 };
 
+// Binary Search Version.
 /**
  * Your HitCounter object will be instantiated and called as such:
  * HitCounter obj = new HitCounter();
  * obj.hit(timestamp);
  * int param_2 = obj.getHits(timestamp);
+ */
+
+class HitCounter {
+public:
+    HitCounter() {
+        
+    }
+    
+    void hit(int timestamp) {
+        hits.push_back(timestamp);
+    }
+    
+    int getHits(int timestamp) {
+        int val = timestamp - 300;
+        int l = 0, r = hits.size()-1;
+        while(l <= r) {
+            int m = l + (r-l)/2;
+            if(hits[m] <= val) {
+                l = m + 1;
+            } else {
+                r = m - 1;
+            }
+        }
+        return hits.size()-l;
+    }
+
+    vector<int> hits;
+};
+
+/**
+ * Your HitCounter object will be instantiated and called as such:
+ * HitCounter* obj = new HitCounter();
+ * obj->hit(timestamp);
+ * int param_2 = obj->getHits(timestamp);
  */
