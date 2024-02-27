@@ -43,7 +43,7 @@ class Solution {
 
 /*
 Conclustion: a middle level algorithm issue, it is equal to find whether or not there is a cycle exist in a directed graph.
-1. convert the inpute edges to graph.
+1. convert the input edges to graph.
 2. create an array to record which component has been visited.
 3. create an array to record in one recursive path, which nodes has been visited (used to detect whether or not a cycle exists
 in the input graph)
