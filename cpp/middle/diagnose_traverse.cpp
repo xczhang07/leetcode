@@ -40,3 +40,5 @@ public:
         return ret;
     }
 };
+
+Reference: https://www.youtube.com/watch?v=NTF7sDU0IWA
