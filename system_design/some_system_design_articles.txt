@@ -10,3 +10,6 @@ https://www.youtube.com/watch?v=Ox-aXX2qekU
 
 What is RabbitMQ 
 https://www.youtube.com/watch?v=7rkeORD4jSw
+
+What is Kafka
+https://www.youtube.com/watch?v=aj9CDZm0Glc
