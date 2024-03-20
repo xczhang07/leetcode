@@ -49,3 +49,33 @@ public:
 Time Complexity is: O(n)
 Space Complexity is: O(n)
 */
+
+An easy understanding version as following:
+class Solution {
+public:
+    int lengthOfLongestSubstringTwoDistinct(string s) {
+        int i = 0, j = 0;
+        int maxLen = 0;
+        unordered_map<char, int> m;
+        int unique = 0;
+        while(j < s.size()) {
+            if(m.find(s[j]) == m.end()) {
+                ++unique;
+            }
+            m[s[j]]++;
+            if(unique <= 2) {
+                maxLen = max(maxLen, j-i+1);
+            }
+            while(unique > 2) {
+                m[s[i]]--;
+                if(m[s[i]] == 0) {
+                    --unique;
+                    m.erase(s[i]);
+                }
+                ++i;
+            }
+            ++j;
+        }
+        return maxLen;
+    }
+};
