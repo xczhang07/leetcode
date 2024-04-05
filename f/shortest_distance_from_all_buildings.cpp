@@ -21,6 +21,8 @@ Explanation: Given three buildings at (0,0), (0,4), (2,2), and an obstacle at (0
 Note:
 There will be at least one building. If it is not possible to build such house according to the above rules, return -1.
 
+Reference: https://www.cnblogs.com/grandyang/p/5297683.html
+
 class Solution {
 public:
     int shortestDistance(vector<vector<int>>& grid) {
