@@ -71,3 +71,37 @@ bool isNumber(string s) {
     }
     return true;
 }
+
+// The version without e/E
+bool isValidNumber(string& num) {
+    if(num.size() == 0) {
+        return false;
+    }
+    int i = 0;
+    int j = num.size()-1;
+    if(num[i] == '+' || num[i] == '-') {
+        ++i;
+    }
+    if(i==j && (num[i] == '.')) {
+        return false;
+    }
+    if(num[j] == '+' || num[j] == '-') {
+        return false;
+    }
+    bool hasDot = false;
+    for(int k = i; k <= j; ++k) {
+        if(num[k] == '.') {
+            if(hasDot) {
+                return false;
+            }
+            hasDot = true;
+        } else if(num[k] >= '0' && num[k] <= '9') {
+            continue;
+        } else if(num[k] == '+' || num[k] == '-') {
+            return false;
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
