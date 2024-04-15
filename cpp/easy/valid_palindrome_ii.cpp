@@ -77,3 +77,32 @@ public:
         return true;
     }
 };
+
+Solution 3, short and easy to understand
+class Solution {
+public:
+    bool isPalindrome(string& s, int i, int j) {
+        while(i < j) {
+            if(s[i] == s[j]) {
+                ++i;
+                --j;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool validPalindrome(string s) {
+        int l = 0, r = s.size()-1;
+        while(l < r) {
+            if(s[l] == s[r]) {
+                l += 1;
+                r -= 1;
+            } else {
+                return isPalindrome(s, l+1, r) || isPalindrome(s, l, r-1);
+            }
+        }
+        return true;
+    }
+};
