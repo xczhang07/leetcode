@@ -1,0 +1,37 @@
+Question: Given two strings needle and haystack, return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+
+Solution:
+
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        if(haystack.size() == 0 || haystack.size() < needle.size()) {
+            return -1;
+        }
+        int s = 0;
+        int t = 0;
+        int len = needle.size();
+        while(s+len <= haystack.size()) {
+           if(haystack[s] == needle[t]) {
+                int i = s;
+                while(t < len) {
+                    if(haystack[i] == needle[t]) {
+                        i += 1;
+                        t += 1;
+                    } else {
+                        t = 0;
+                        s += 1;
+                        break;
+                    }
+                }
+                if(t == needle.size()) {
+                    return s;
+                }
+           } else {
+                s += 1;
+           }
+        }
+        return -1;
+    }
+};
