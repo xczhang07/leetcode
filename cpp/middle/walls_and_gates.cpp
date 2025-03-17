@@ -52,3 +52,54 @@ public:
         }
     }
 };
+
+// An simple solution as below
+class Solution {
+public:
+    void wallsAndGates(vector<vector<int>>& rooms) {
+        if(rooms.size() == 0) {
+            return;
+        }
+        int m = rooms.size();
+        int n = rooms[0].size();
+        int gate = 0;
+        int wall = -1;
+        int empty = INT_MAX;
+        vector<pair<int,int>> dirs = {{0,1}, {0,-1}, {1,0}, {-1,0}};
+        queue<pair<int, int>> q;
+        // find all gates and push into the queue
+        for(int i = 0; i < m; ++i) {
+            for(int j = 0; j < n; ++j) {
+                if(rooms[i][j] == gate) {
+                    q.push({i, j});
+                }
+            }
+        }
+        int distance = 0;
+        // bfs to fill up the shortest distance for each empty room to gate.
+        while(!q.empty()) {
+            int k = q.size();
+            while(k) {
+                auto node = q.front();
+                q.pop();
+                for(auto d: dirs) {
+                    int x = node.first + d.first;
+                    int y = node.second + d.second;
+                    if(x < 0 || x >= m || y < 0 || y >= n) {
+                        continue;
+                    }
+                    if(rooms[x][y] == wall) {
+                        continue;
+                    }
+                    if(rooms[x][y] > distance+1) {
+                        rooms[x][y] = distance+1;
+                        q.push({x, y});
+                    }
+                }
+                k -= 1;
+            }
+            distance += 1;
+        }
+        return;
+    }
+};
