@@ -72,3 +72,54 @@ Time Complexity: O(mn)
 Space Complexity: O(mn)
 
 graph dfs travel
+
+
+// BFS version
+class Solution {
+public:
+    void solve(vector<vector<char>>& board) {
+        if(board.size() == 0 || board[0].size() == 0) {
+            return;
+        }
+        int m = board.size();
+        int n = board[0].size();
+        vector<vector<int>> visited(m, vector<int>(n,0));
+        queue<pair<int,int>> q;
+        vector<pair<int,int>> dirs = {{0,1}, {0,-1}, {1,0}, {-1,0}};
+        for(int i = 0; i < m; ++i) {
+            for(int j = 0; j < n; ++j) {
+                if(i == 0 || j == 0 || i == m-1 || j == n-1) {
+                    if(board[i][j] == 'O') {
+                        q.push({i, j});
+                        visited[i][j] = 1;
+                    }
+                }
+            }
+        }
+        while(!q.empty()) {
+            auto node = q.front();
+            q.pop();
+            int x = node.first;
+            int y = node.second;
+            for(auto d: dirs) {
+                int nx = x + d.first;
+                int ny = y + d.second;
+                if(nx < 0 || nx >= m || ny < 0 || ny >= n || visited[nx][ny]) {
+                    continue;
+                }
+                if(board[nx][ny] == 'O') {
+                    visited[nx][ny] = 1;
+                    q.push({nx, ny});
+                }
+            }
+        }
+        for(int i = 1; i < m-1; ++i) {
+            for(int j = 1; j < n-1; ++j) {
+                if(board[i][j] == 'O' and visited[i][j] == 0) {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+        return;
+    }
+};
