@@ -27,3 +27,43 @@ So the final solustion should be: max(tasks.size(), (k-1)*(n+1)+p);
 
 Time Complexity: O(n)
 Space Complexity: O(n)
+
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+         vector<int> m(26,0);
+         priority_queue<int> pq;
+         // calculate each task frequency.
+         for(char t: tasks) {
+            m[t-'A'] += 1;
+         }
+         for(int i = 0; i < m.size(); ++i) {
+            if(m[i] > 0) {
+                pq.push(m[i]);
+            }
+         }
+         int totalCycleNum = 0;
+         while(!pq.empty()) {
+            vector<int> remain;
+            int fixedCycle = n+1;
+            while(fixedCycle > 0 and !pq.empty()) {
+                int top = pq.top();
+                pq.pop();
+                if(top-1 > 0) {
+                    remain.push_back(top-1);
+                }
+                fixedCycle -= 1;
+                totalCycleNum += 1;
+            }
+            // All tasks are executed.
+            if(remain.size() == 0 && pq.empty()) {
+                break;
+            }
+            for(int t: remain) {
+                pq.push(t);
+            }
+            totalCycleNum += fixedCycle;
+         }
+         return totalCycleNum;
+    }
+};
