@@ -19,7 +19,7 @@ int findSteps(int num)
     unordered_map<int,int> m;
     for(int i = 1; i <= num; ++i)
     {
-        int steps = collatzConjecture(num, m);
+        int steps = collatzConjecture(i, m);
         m[i] = steps;
         ret = max(ret, steps);
     }
