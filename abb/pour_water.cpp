@@ -170,3 +170,32 @@ void printWater(vector<int>& array, vector<int>& water)
     }
     cout<<endl;
 }
+
+// more straight forward solution to print water
+void printWater2(vector<int>& land, vector<int>& landWithWater) {
+    int maxHeight = 0;
+    for(int i = 0; i < landWithWater.size(); ++i) {
+        maxHeight = max(maxHeight, landWithWater[i]);
+    }
+    while(maxHeight) {
+        for(int i = 0; i < landWithWater.size(); ++i) {
+            int landHeight = land[i];
+            int waterLandHeight = landWithWater[i];
+            if(landWithWater[i] == maxHeight or land[i] == maxHeight) {
+                if(landWithWater[i] > land[i]) {
+                    cout<<"w";
+                    landWithWater[i] -= 1;
+                } else {
+                    cout<<"+";
+                    landWithWater[i] -= 1;
+                    land[i] -= 1;
+                }
+            } else {
+                cout<<" ";
+            }
+        }
+        maxHeight -= 1;
+        cout<<endl;
+    }
+    return;
+}
