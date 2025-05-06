@@ -6,6 +6,8 @@ wizard[0] list: {1, 4, 5} wizard[4] list: {9} wizard 0 to 9 min distance is (0-4
 (wizard[0]->wizard[4]->wizard[9])
 */
 
+
+// 1st version, get the minCost path and no keep track on the visited node(potential bug)
 int wizardMinCost(vector<vector<int>>& wizards, int src, int dst)
 {
     if (wizards.size() == 0)
@@ -13,7 +15,7 @@ int wizardMinCost(vector<vector<int>>& wizards, int src, int dst)
     int min_cost = INT_MAX;
     queue<pair<vector<int>, pair<int, int>>> q;
     vector<int> path;
-    path.push_back(0);
+    path.push_back(src);
     q.push(make_pair(path, make_pair(src, 0)));
     while (!q.empty())
     {
@@ -48,3 +50,43 @@ int wizardMinCost(vector<vector<int>>& wizards, int src, int dst)
     cout << endl;
     return min_cost;
 }
+
+// Version2: maintain an length is 10 minCost array, added the logic to handle the visited node
+int wizardMinCostV2(vector<vector<int>>& wizards, int src, int dst) {
+    if(wizards.size() == 0) {
+        return 0;
+    }
+    if(src < 0 or src > 9 or dst < 0 or dst > 9) {
+        return 0;
+    }
+    vector<int> minCostVec(10, INT_MAX);
+    minCostVec[src] = 0;
+    queue<pair<int,int>> q;
+    q.push({src, 0});
+    unordered_set<int> visited;
+    // Define an visited set to keep track of the visited wizard
+    visited.insert(src);
+    // BFS traversal the queue.
+    while(!q.empty()) {
+        int size = q.size();
+        while(size) {
+            size -= 1;
+            auto top = q.front();
+            q.pop();
+            int currWizard = top.first;
+            int cost = top.second;
+            for(int i = 0; i < wizards[currWizard].size(); ++i) {
+                int neighborWizard = wizards[currWizard][i];
+                int newCost = cost + (neighborWizard-currWizard)*(neighborWizard-currWizard);
+                if(newCost < minCostVec[neighborWizard]) {
+                    minCostVec[neighborWizard] = newCost;
+                    if(visited.find(neighborWizard) == visited.end()) {
+                        q.push({neighborWizard, newCost});
+                    }
+                }
+            }
+        }
+    }
+    return minCostVec[dst];
+}
+
