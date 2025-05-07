@@ -4,6 +4,32 @@ using namespace std;
 
 // https://www.1point3acres.com/bbs/thread-1110506-1-1.html
 
+就一道coding，我看其他帖子也有重复的原题： tag一段review所有中的关键词
+
+
+/** 给一个 key word to tag的mapping, 比如
+{
+"san": "person",
+"francisco": "person",
+"san francisco": "city",
+"Airbnb": "business",
+
+"city": "location",
+}
+然后给一段Review:
+"I travelled to San Francisco for work and stayed at Airbnb.
+I really loved the city and the home where I stayed.
+I stayed with San and Francisco.
+They both were really good and san's hospitality was outstanding."
+要求把所有关键词替换成 [<tag>]{<key word>}, 这个例子就返回
+"I travelled to [city]{San Francisco} for work and stayed at [business]{Airbnb}.
+I really loved the [location]{city} and the home where I stayed.
+I stayed with [person]{San} and [person]{Francisco}.
+They both were really good and [person]{san}'s hospitality was outstanding."
+
+
+对于run time 没有特别的要求，但是45分钟 code要能run 并且pass test cases时间还是有点紧张的。我写的是用trie来存所有的key word,然后一边扫review 一边作prefix matching **/
+
 class TrieNode {
 public:
     TrieNode() {
