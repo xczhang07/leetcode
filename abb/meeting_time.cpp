@@ -50,3 +50,33 @@ public:
         return ret;
     }
 };
+
+// If the input like 2-Dimision array as {{1,3},{6,7},{2,4},{2,3},{9,12}}
+// Then the implementation as simpler than the above one.
+bool compare(vector<int>& m1, vector<int>& m2) {
+    if(m1[0] == m2[0]) {
+        return m1[1] < m2[1];
+    } else {
+        return m1[0] < m2[0];
+    }
+}
+
+vector<vector<int>> employeeFreeTime(vector<vector<int>> meetings) {
+    if(meetings.size() < 2) {
+        return {};
+    }
+    sort(meetings.begin(), meetings.end(), compare);
+    vector<vector<int>> freeTime;
+    int begin = meetings[0][0];
+    int end = meetings[0][1];
+    for(int i = 1; i < meetings.size(); ++i) {
+        if(end < meetings[i][0]) {
+            freeTime.push_back({end, meetings[i][0]});
+            begin = meetings[i][0];
+            end = meetings[i][1];
+        } else {
+            end = meetings[i][1];
+        }
+    }
+    return freeTime;
+}
