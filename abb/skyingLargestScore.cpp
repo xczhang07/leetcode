@@ -88,3 +88,49 @@ int main()
 	cout << endl;
   return 0;
 }
+
+
+int getHighestSkyingScoreV2(vector<string>& end, vector<tuple<string, int, string>>& costs, unordered_map<string, int>& rewards, vector<string>& path) {
+    if(costs.size() == 0 or rewards.size() == 0 or end.size() == 0) {
+        return 0;
+    }
+    unordered_set<string> dst(end.begin(), end.end());
+    unordered_map<string, vector<pair<string, int>>> graph;
+    int maxScore = INT_MIN;
+    // build the graph based on the input.
+    for(auto cost: costs) {
+        string start = get<0>(cost);
+        string arrival = get<2>(cost);
+        int money = get<1>(cost);
+        graph[start].push_back({arrival, money});
+    }
+    queue<pair<vector<string>, pair<string, int>>> q;
+    q.push({{"start"}, {"start", 0}});
+    while(!q.empty()) {
+        int size = q.size();
+        for(int i = 0; i < size; ++i) {
+            auto node = q.front();
+            q.pop();
+            string currLocation = node.second.first;
+            // if the current location in the dstination set, compute the highest score
+            if(dst.count(currLocation)) {
+                int score = node.second.second;
+                if(score > maxScore) {
+                    maxScore = score;
+                    path = node.first;
+                }
+                continue;
+            }
+            // traverse the graph based on the current location
+            for(int j = 0; j < graph[currLocation].size(); ++j) {
+                string nextStation = graph[currLocation][j].first;
+                vector<string> tmpPath = node.first;
+                tmpPath.push_back(nextStation);
+                int score = rewards[nextStation] - graph[currLocation][j].second;
+                q.push({tmpPath, {nextStation, node.second.second+score}});
+            }
+        }
+    }
+    return maxScore;
+}
+
