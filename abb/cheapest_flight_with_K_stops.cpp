@@ -83,3 +83,41 @@ public:
     
     
 };
+
+# Solution 2
+int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+        if(flights.size() == 0) {
+            return -1;
+        }
+        vector<vector<pair<int, int>>> adjList(n);
+        // build the adj list
+        for(vector<int>& f: flights) {
+            int start = f[0];
+            int end = f[1];
+            int price = f[2];
+            adjList[f[0]].push_back({end, price});
+        }
+        vector<int> minPrice(n, INT_MAX);
+        queue<pair<int,int>> q;
+        int stop = 0;
+        q.push({src, 0});
+        while(!q.empty() and stop <= k) {
+            int size = q.size();
+            while(size) {
+                auto [city, cost] = q.front();
+                q.pop();
+                size -= 1;
+                for(auto [neighbor, ticket]: adjList[city]) {
+                    if(cost + ticket < minPrice[neighbor]) {
+                        minPrice[neighbor] = cost + ticket;
+                        q.push({neighbor, cost+ticket});
+                    }
+                }
+            }
+            stop += 1;
+        }
+        if(minPrice[dst] == INT_MAX) {
+            return -1;
+        }
+        return minPrice[dst];
+    }
