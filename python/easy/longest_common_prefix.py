@@ -23,4 +23,14 @@ class Solution(object):
             prefix = compare
             compare = ""
         return prefix
+
+# pythonic way
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        if not strs:
+            return ""
+        for idx, chars in enumerate(zip(*strs)):
+            if len(set(chars)) > 1:
+                return strs[0][:idx]
+        return min(strs, key=len)
         
