@@ -22,3 +22,12 @@ class Solution(object):
         
 Conclusion:
 python has function which name is: isalnum(), we need to take care of this function, new function for studying
+
+# 2025/07/25
+The above solution is not concise pythonic
+the following solution is pythonic and better
+
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        s = [c.lower() for c in s if c.isalnum()]
+        return s == s[::-1]
