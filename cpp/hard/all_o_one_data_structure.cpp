@@ -80,109 +80,94 @@ private:
 
 class AllOne {
 public:
-    /** Initialize your data structure here. */
     AllOne() {
         
     }
     
-    /** Inserts a new key <Key> with value 1. Or increments an existing key by 1. */
     void inc(string key) {
-        if(!m.count(key))
-        {
-            if(buckets.size() == 0 || buckets.back().first != 1)
-            {
-                auto newBucket = buckets.insert(buckets.end(), {1, {key}});
-                m[key] = newBucket;
-            }
-            else
-            {
-                auto lastBucket = --buckets.end();
-                lastBucket->second.insert(key);
-                m[key] = lastBucket;
+        // if the key doesn't exist in the system.
+        if(!keyMap.count(key)) {
+            if(freqList.size() == 0 or freqList.back().first != 1) {
+                auto addr = freqList.insert(freqList.end(), {1, {key}});
+                keyMap[key] = addr;
+            } else {
+                freqList.back().second.insert(key);
+                keyMap[key] = --freqList.end();
             }
             return;
-        }
-        else
-        {
-            auto currBucket = m[key];
-            auto prevBucket = (--m[key]);
-            if(prevBucket->first != currBucket->first+1)
-            {
-                auto newBucket = buckets.insert(currBucket, {currBucket->first+1, {key}});
-                m[key] = newBucket;
-                currBucket->second.erase(key);
-                if(currBucket->second.empty())
-                    buckets.erase(currBucket);
+        } else {
+            auto addr = keyMap[key];
+            auto prev = (--keyMap[key]); // the previous node of the list has higher frequency.
+            if(prev->first != addr->first+1) {
+                auto newAddr = freqList.insert(addr, {addr->first+1, {key}});
+                keyMap[key] = newAddr;
+            } else {
+                prev->second.insert(key);
+                keyMap[key] = prev;
             }
-            else
-            {
-                prevBucket->second.insert(key);
-                m[key] = prevBucket;
-                currBucket->second.erase(key);
-                if(currBucket->second.empty())
-                    buckets.erase(currBucket);
+            addr->second.erase(key);
+            if(addr->second.size() == 0) {
+                freqList.erase(addr);
             }
             return;
         }
     }
     
-    /** Decrements an existing key by 1. If Key's value is 1, remove it from the data structure. */
     void dec(string key) {
-        if(!m.count(key))
-            return;
-        auto currBucket = m[key];
-        if(currBucket->first == 1)
-        {
-            currBucket->second.erase(key);
-            if(currBucket->second.size()==0)
-                buckets.erase(currBucket);
-            m.erase(key);
+        if(!keyMap.count(key)) {
             return;
         }
-        
-        auto nextBucket = ++m[key];
-        if(nextBucket->first != currBucket->first-1)
-        {
-            auto newBucket = buckets.insert(nextBucket, {currBucket->first-1, {key}});
-            m[key] = newBucket;
+        auto addr = keyMap[key];
+        if(addr->first == 1) {
+            addr->second.erase(key);
+            if(addr->second.size() == 0) {
+                freqList.erase(addr);
+            }
+            keyMap.erase(key);
+            return;
         }
-        else
-        {
-            nextBucket->second.insert(key);
-            m[key] = nextBucket;
+        auto next = ++keyMap[key]; // the next one has lower frequency.
+        if(next->first+1 != addr->first) {
+            auto newAddr = freqList.insert(next, {addr->first-1, {key}});
+            keyMap[key] = newAddr;
+        } else {
+            if(next == freqList.end()) { // fix a bug of the previous version.
+                auto newAddr = freqList.insert(freqList.end(), {addr->first-1, {key}});
+                keyMap[key] = newAddr;
+            } else {
+                next->second.insert(key);
+                keyMap[key] = next;
+            }
         }
-        currBucket->second.erase(key);
-        if(currBucket->second.size() == 0)
-            buckets.erase(currBucket);
-        return;
+        addr->second.erase(key);
+        if(addr->second.size() == 0) {
+            freqList.erase(addr);
+        }
     }
     
-    /** Returns one of the keys with maximal value. */
     string getMaxKey() {
-        if(buckets.size() == 0)
+        if(freqList.size() == 0) {
             return "";
-        else
-            return *(buckets.front().second.begin());
+        }
+        return *(freqList.front().second.begin());
     }
     
-    /** Returns one of the keys with Minimal value. */
     string getMinKey() {
-        if(buckets.size() == 0)
+        if(freqList.size() == 0) {
             return "";
-        else
-            return *(buckets.back().second.begin());
+        }
+        return *(freqList.back().second.begin());
     }
-    
 private:
-    unordered_map<string, list<pair<int, unordered_set<string>>>::iterator> m;
-    list<pair<int,unordered_set<string>>> buckets;
+    list<pair<int, unordered_set<string>>> freqList; // the list maps to frequency with its corresponding keys.
+    unordered_map<string, list<pair<int, unordered_set<string>>>::iterator> keyMap; // for quick lookup.
 };
 
 /**
  * Your AllOne object will be instantiated and called as such:
- * AllOne obj = new AllOne();
- * obj.inc(key);
- * obj.dec(key);
- * string param_3 = obj.getMaxKey();
- * string param_4 = obj.getMinKey();
+ * AllOne* obj = new AllOne();
+ * obj->inc(key);
+ * obj->dec(key);
+ * string param_3 = obj->getMaxKey();
+ * string param_4 = obj->getMinKey();
  */
